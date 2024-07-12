@@ -7,9 +7,6 @@ export const useLastFM = () => {
   const REGISTERED_TO = "restrada4017";
   const URL = "https://ws.audioscrobbler.com/2.0/";
 
-  // JSON: /2.0/?method=geo.gettoptracks&country=spain&api_key=c19c47264b0dfd0973d63aa54cb6788c&format=json
-  // XML: /2.0/?method=geo.gettoptracks&country=spain&api_key=YOUR_API_KEY
-
   const fetchTopTracks = async () => {
     try {
       const response = await axios.get(URL, {
@@ -26,7 +23,26 @@ export const useLastFM = () => {
     }
   };
 
+  const fetchTrack = async (artist: string, track: string) => {
+    try {
+      const response = await axios.get(URL, {
+        params: {
+          method: "track.getInfo",
+          country: "spain",
+          api_key: API_KEY,
+          artist,
+          track,
+          format: "json",
+        },
+      });
+      return response.data.track;
+    } catch (error) {
+      console.log("top track's error: ", error);
+    }
+  };
+
   return {
     fetchTopTracks,
+    fetchTrack,
   };
 };

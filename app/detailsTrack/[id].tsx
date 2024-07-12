@@ -66,10 +66,8 @@ export default function DetailsTrack({ route }: { route: any }) {
   };
 
   const handleVolumeChange = (value: number) => {
-    setVolume(value); // Actualiza el estado del volumen
+    setVolume(value);
   };
-
-  // console.log("🚀 ~ DetailsTrack ~ item:", item);
 
   return (
     <View style={styles.main}>
