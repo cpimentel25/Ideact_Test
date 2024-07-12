@@ -47,6 +47,7 @@ export default function Home() {
         estimatedItemSize={100}
         keyExtractor={(item: RootObject, index) => item.name || String(index)}
         ListEmptyComponent={<Text>Not found or Empty section</Text>}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );
