@@ -23,6 +23,22 @@ export const useLastFM = () => {
     }
   };
 
+  const fetchArtist = async (artist: string) => {
+    try {
+      const response = await axios.get(URL, {
+        params: {
+          method: "artist.getinfo",
+          artist,
+          api_key: API_KEY,
+          format: "json",
+        },
+      });
+      return response.data.artist;
+    } catch (error) {
+      console.log("fetch get artist error: ", error);
+    }
+  };
+
   const fetchTrack = async (artist: string, track: string) => {
     try {
       const response = await axios.get(URL, {
@@ -37,12 +53,13 @@ export const useLastFM = () => {
       });
       return response.data.track;
     } catch (error) {
-      console.log("top track's error: ", error);
+      console.log("fetch get track's error: ", error);
     }
   };
 
   return {
     fetchTopTracks,
+    fetchArtist,
     fetchTrack,
   };
 };

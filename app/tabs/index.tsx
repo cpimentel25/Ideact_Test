@@ -46,7 +46,13 @@ export default function Home() {
         renderItem={renderRow}
         estimatedItemSize={100}
         keyExtractor={(item: RootObject, index) => item.name || String(index)}
-        ListEmptyComponent={<Text>Not found or Empty section</Text>}
+        ListEmptyComponent={
+          <View style={[mainContainer, { justifyContent: "center" }]}>
+            <Text style={{ color: colors.white, textAlign: "center" }}>
+              Not found or Empty section
+            </Text>
+          </View>
+        }
         showsVerticalScrollIndicator={false}
       />
     </View>
