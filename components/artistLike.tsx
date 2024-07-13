@@ -1,4 +1,4 @@
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Image, StyleSheet, Text, View } from "react-native";
 import React, { useRef, useState } from "react";
 import { useLastFM } from "@/hooks/useLastFm";
 import { FlashList } from "@shopify/flash-list";
@@ -6,17 +6,18 @@ import { useGlobalStyles } from "@/hooks/useGlobalStyles";
 import { colors } from "@/constants/Colors";
 import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ArtistInfo from "./artistInfo";
 
 export default function ArtistLike() {
   const { mainContainer } = useGlobalStyles();
   const { fetchArtist } = useLastFM();
   const [loading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<any>([]);
 
   const listRef = useRef(null);
 
   const renderRow = ({ item, index }: { item: any; index: number }) => (
-    <Text style={{ color: colors.white }}>{item}</Text>
+    <ArtistInfo item={item} />
   );
 
   useFocusEffect(
@@ -27,12 +28,15 @@ export default function ArtistLike() {
           const favoriteArtists = storedArtists
             ? JSON.parse(storedArtists)
             : [];
-          //   setData(favoriteArtists);
-          // Extraer solo los nombres de los artistas
-          const artistNames = favoriteArtists.map(
-            (artist: { name: string }) => artist.name
+
+          const artistDetails = await Promise.all(
+            favoriteArtists.map(async (artist: { name: string }) => {
+              const details = await fetchArtist(artist.name);
+              return details;
+            })
           );
-          setData(artistNames);
+
+          setData(artistDetails);
         } catch (error) {
           console.error("Error fetching favorite artists:", error);
         } finally {

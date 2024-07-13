@@ -15,8 +15,6 @@ export const colors = {
   darkGreen: "#092B2B",
   grey: "#9BA1A6",
   greyLight: "#EEEEEE",
-  discord: "#7289da",
-  twitch: "#9146ff",
 };
 
 export const Thems = {
